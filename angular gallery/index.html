@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="css/gallery.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<body>
+
+<script>
+var app = angular.module("myShoppingList", []); 
+app.controller("myCtrl", function($scope) {
+    $scope.products = ["1.jpg", "2.jpg", "3.jpg"];
+    $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}
+        if ($scope.products.indexOf($scope.addMe) == -1) {
+            $scope.products.push($scope.addMe);
+        } else {
+            $scope.errortext = "This Image is already in your Gallery.";
+        }
+    }
+    $scope.removeItem = function (x) {
+        $scope.errortext = "";    
+        $scope.products.splice(x, 1);
+    }
+});
+</script>
+<script>
+
+function search()
+{
+    var fullPath = $("#file-selector").val();
+    
+    var filename = fullPath.replace(/^.*[\\\/]/, '');
+    $("#fileName").val(filename);
+};
+
+
+</script>
+
+<div ng-app="myShoppingList" ng-cloak ng-controller="myCtrl" class="gallery">
+  <header class="header">
+    <h3>My Gallery</h3>
+  </header>
+  <div class="row images">
+    <img src="kepek/{{x}}" ng-repeat="x in products" class="img">{{x}}<span ng-repeat="x in products" ng-click="removeItem($index)" style="cursor:pointer;" class="close">×</span>
+</div>
+    
+<br/>
+  <div class="AddImg">
+    <input type="file" id="file-selector" onchange="search()"> 
+     <input type="text" id="fileName" ng-model="addMe">
+      </div>
+      <div class="w3-col s2">
+        <button ng-click="addItem()" class="btn">Add</button>
+      </div>
+
+    <p class="w3-text-red">{{errortext}}</p>
+</div>
+</body>
+</html>
